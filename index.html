@@ -135,6 +135,7 @@ table.st td:last-child,table.st th:last-child{text-align:right}
 .note{font-size:12.5px;color:var(--muted);line-height:1.7}
 .note b{color:var(--fg)}
 .foot{text-align:center;color:var(--muted);font-size:11.5px;margin:26px 0 4px;line-height:1.7}
+.foot .mark{display:inline-block;margin-top:3px;letter-spacing:.14em;color:var(--brand);opacity:.9;font-weight:600}
 .dark-toggle{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .switch{width:48px;height:28px;border-radius:99px;background:var(--line);position:relative;transition:background .2s;flex:0 0 48px}
 .switch:after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
@@ -805,7 +806,7 @@ function renderHome(){
         <b>范围说明：</b>课件含第1–8章及两套练习；第9–12章（酸碱、沉淀、氧化还原、配位滴定）工作区无课件，未收录。
         每题标注课件页码，讲解只依据课件；课件自身笔误处在讲解中直接标明。
       </div>
-      <div class="foot">每一道做懂的题，都是考场上多出来的一分 · 记录只存本地，不上传</div>
+      <div class="foot">每一道做懂的题，都是考场上多出来的一分<br><span class="mark">槐叶 · HuaiYeah</span> · 记录只存本地，不上传</div>
     </div>`;
 }
 
