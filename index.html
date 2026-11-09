@@ -1,0 +1,1043 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#126b4f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="随身复习">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="apple-touch-icon.png">
+<title>无机及分析化学 · 随身复习</title>
+<style>
+:root{
+  --bg:#f3f6f3; --card:#ffffff; --fg:#17231d; --muted:#6b7d72; --line:#e3e9e4;
+  --brand:#126b4f; --brand2:#1f9d74; --ok:#1f9d74; --no:#cf4040;
+  --chip:#eef4ef; --shadow:0 6px 20px rgba(18,60,44,.07);
+}
+body.dark{
+  --bg:#0e1512; --card:#161f1a; --fg:#e8f0ea; --muted:#93a79b; --line:#25332b;
+  --brand:#3fbf92; --brand2:#3fbf92; --ok:#3fbf92; --no:#ff7b7b;
+  --chip:#1e2a23; --shadow:0 6px 20px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--fg);font-size:16px;line-height:1.62;
+  padding-bottom:calc(12px + env(safe-area-inset-bottom));
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:640px;margin:0 auto;padding:16px 16px 44px}
+.top{
+  position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;
+  padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  background:var(--bg);border-bottom:1px solid var(--line);
+  max-width:640px;margin:0 auto;
+}
+.top .back{font-size:24px;line-height:1;color:var(--brand);background:none;border:0;padding:2px 8px 6px 0;cursor:pointer}
+.top .ttl{font-weight:700;font-size:17px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top .cnt{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.hero{
+  background:linear-gradient(140deg,#126b4f,#1f9d74 62%,#37b98d);
+  color:#fff;border-radius:20px;padding:22px 20px 18px;box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.hero:after{content:"";position:absolute;right:-40px;top:-50px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero h1{margin:0 0 4px;font-size:21px;letter-spacing:.3px}
+.hero p{margin:0;opacity:.9;font-size:13px}
+.stats{display:flex;gap:8px;margin-top:16px}
+.stat{flex:1 1 0;min-width:0;background:rgba(255,255,255,.16);border-radius:12px;padding:8px 6px;text-align:center}
+.stat b{display:block;font-size:18px;font-variant-numeric:tabular-nums}
+.stat span{font-size:11px;opacity:.85;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{
+  display:block;width:100%;border:0;border-radius:14px;padding:14px 16px;font-size:16px;
+  font-weight:600;cursor:pointer;font-family:inherit;text-align:center;transition:transform .06s ease;
+}
+.btn:active{transform:scale(.985)}
+.btn.primary{background:var(--brand);color:#fff;box-shadow:var(--shadow)}
+.btn.ghost{background:var(--card);color:var(--fg);border:1px solid var(--line)}
+.btn.wide{margin-top:10px}
+.btn[disabled]{opacity:.45}
+.row{display:flex;gap:10px;margin-top:12px}
+.row .btn{margin-top:0}
+.sec{margin:22px 0 10px;display:flex;align-items:baseline;justify-content:space-between}
+.sec h2{margin:0;font-size:15px;letter-spacing:.4px;color:var(--muted);font-weight:600}
+.sec a{font-size:13px;color:var(--brand);text-decoration:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 15px;box-shadow:var(--shadow);margin-bottom:10px}
+.chap{display:flex;align-items:center;gap:12px;cursor:pointer}
+.chap .no{
+  width:42px;height:42px;flex:0 0 42px;border-radius:12px;background:var(--chip);color:var(--brand);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;font-variant-numeric:tabular-nums
+}
+.chap .meta{flex:1;min-width:0}
+.chap .meta b{display:block;font-size:15.5px}
+.chap .meta span{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chap .pct{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.bar{height:5px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:9px}
+.bar i{display:block;height:100%;background:var(--brand2);border-radius:99px;transition:width .35s ease}
+.bar.small{margin-top:6px;height:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 12px}
+.chip{font-size:11.5px;padding:3px 9px;border-radius:99px;background:var(--chip);color:var(--muted)}
+.chip.lv1{color:#3d7a5f}
+.chip.lv2{color:#b8791a}
+.chip.lv3{color:#b8474d}
+body.dark .chip.lv1{color:#7fd6b3}
+body.dark .chip.lv2{color:#e0b25c}
+body.dark .chip.lv3{color:#ff9aa0}
+.stem{font-size:18px;line-height:1.75;font-weight:600;margin:6px 0 16px;letter-spacing:.2px}
+.opt{
+  display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;
+  background:var(--card);border:1.5px solid var(--line);border-radius:14px;
+  padding:13px 14px;margin-bottom:9px;font-size:16px;line-height:1.55;color:var(--fg);
+  font-family:inherit;cursor:pointer;transition:border-color .12s,background .12s;
+}
+.opt .k{
+  flex:0 0 24px;height:24px;border-radius:50%;border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;color:var(--muted);margin-top:1px
+}
+.opt.sel{border-color:var(--brand);background:var(--chip)}
+.opt.sel .k{background:var(--brand);border-color:var(--brand);color:#fff}
+.opt.ok{border-color:var(--ok);background:rgba(31,157,116,.1)}
+.opt.ok .k{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.no{border-color:var(--no);background:rgba(207,64,64,.09)}
+.opt.no .k{background:var(--no);border-color:var(--no);color:#fff}
+.opt.dim{opacity:.55}
+.tip{font-size:13px;color:var(--muted);text-align:center;margin:14px 0 0}
+.link{color:var(--brand);background:none;border:0;font-size:14px;font-family:inherit;cursor:pointer;padding:6px}
+.exp{
+  border-left:3px solid var(--brand2);background:var(--card);border-radius:0 14px 14px 0;
+  padding:12px 14px;margin-top:4px;font-size:14.5px;line-height:1.75;box-shadow:var(--shadow)
+}
+.exp .h{font-weight:700;color:var(--brand);font-size:13px;letter-spacing:.5px;margin-bottom:4px;display:flex;justify-content:space-between;gap:8px}
+.exp .src{font-weight:400;color:var(--muted);font-size:12px}
+.exp .ref{background:var(--chip);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:14px}
+.big{font-size:22px;font-weight:800;margin:2px 0 6px;font-variant-numeric:tabular-nums}
+.mid{text-align:center;padding:26px 8px 10px}
+.mid .emoji{font-size:44px;line-height:1.2}
+.mid h3{margin:10px 0 4px;font-size:20px}
+.mid p{margin:0;color:var(--muted);font-size:14px}
+.review{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+.review .it{padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px;color:var(--muted)}
+.review .it:last-child{border-bottom:0}
+.review .it b{color:var(--fg);font-weight:600}
+.wrong-it{display:flex;gap:10px;align-items:flex-start}
+.wrong-it .dot{flex:0 0 8px;width:8px;height:8px;border-radius:50%;background:var(--no);margin-top:8px}
+.taglist{display:flex;flex-wrap:wrap;gap:8px}
+.tagcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-size:13px}
+.tagcard b{font-weight:700}
+.tagcard span{color:var(--muted);font-size:12px;margin-left:6px}
+table.st{width:100%;border-collapse:collapse;font-size:13.5px}
+table.st th,table.st td{padding:9px 4px;border-bottom:1px solid var(--line);text-align:left}
+table.st th{color:var(--muted);font-weight:600;font-size:12px}
+table.st td:last-child,table.st th:last-child{text-align:right}
+.note{font-size:12.5px;color:var(--muted);line-height:1.7}
+.note b{color:var(--fg)}
+.foot{text-align:center;color:var(--muted);font-size:11.5px;margin:26px 0 4px;line-height:1.7}
+.dark-toggle{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.switch{width:48px;height:28px;border-radius:99px;background:var(--line);position:relative;transition:background .2s;flex:0 0 48px}
+.switch:after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch.on{background:var(--brand2)}
+.switch.on:after{left:23px}
+.fade{animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>const Q=[];</script>
+<script>
+/* 第1章 绪论 */
+Q.push(
+{id:'c1-1',ch:'c1',t:'single',tag:'相',src:'第27页',lv:2,
+ stem:'一个密闭容器中混有 N₂、O₂、CO₂ 三种气体，体系的相数是？',
+ opts:['1 个相','2 个相','3 个相','无法确定'],ans:0,
+ exp:'气体不论有多少种混合，只有一个气相。相是体系内部物理和化学性质完全均匀、可用机械方法分离的部分（第27页）。不要把“气体种类数”当成“相数”。'},
+
+{id:'c1-2',ch:'c1',t:'single',tag:'相',src:'第27页',lv:2,
+ stem:'把两种固体粉末充分研磨、混合均匀，体系的相数是？',
+ opts:['1 个相','2 个相','3 个相','看颜色是否相同'],ans:1,
+ exp:'一般有一种固体便有一个相。两种固体粉末无论混合得多均匀，颗粒之间仍存在界面、组成有突变，所以是两个相。例外是合金：熔化混匀后再凝固（第27页）。'},
+
+{id:'c1-3',ch:'c1',t:'single',tag:'摩尔分数',src:'第32–33页',lv:2,
+ stem:'质量分数为 10% 的 NaCl 水溶液中，NaCl 的摩尔分数约为？',
+ opts:['0.033','0.10','0.17','0.97'],ans:0,
+ exp:'取 100 g 溶液：含 NaCl 10 g、水 90 g。n(NaCl)=10/58≈0.17 mol，n(H₂O)=90/18.0=5.0 mol，χ(NaCl)=0.17/(0.17+5.0)≈0.033（第32–33页）。质量分数是质量之比，摩尔分数是物质的量之比，数值不会相同。'},
+
+{id:'c1-4',ch:'c1',t:'single',tag:'质量分数',src:'第34页',lv:1,
+ stem:'物质 B 的质量分数 ω_B 等于？',
+ opts:['n_B / n','m_B / m','n_B / V','m_B / V'],ans:1,
+ exp:'ω_B = m_B/m，m_B 为 B 的质量、m 为混合物（溶液）的质量，SI 单位为 1（第34页）。n_B/n 是摩尔分数，n_B/V 是物质的量浓度。'},
+
+{id:'c1-5',ch:'c1',t:'single',tag:'物质的量浓度',src:'第29页',lv:2,
+ stem:'c_B = n_B/V 中的 V 指的是？',
+ opts:['溶剂体积','溶液体积','气体体积','容器容积'],ans:1,
+ exp:'物质的量浓度定义为“一升溶液中所含溶质的物质的量”，V 是溶液的体积，不是溶剂体积（第29页）。这是最容易配错的地方。'},
+
+{id:'c1-6',ch:'c1',t:'open',tag:'分压定律',src:'第38–41页',lv:2,
+ stem:'某温度下，密闭容器中混有 H₂、O₂、N₂：n(H₂)=0.200 mol、n(O₂)=0.300 mol、n(N₂)=0.500 mol，混合气体总压 p=200 kPa。\n求 O₂ 的分压 p(O₂)，并说明依据和成立条件。',
+ ref:'n = 0.200+0.300+0.500 = 1.000 mol\nχ(O₂) = 0.300/1.000 = 0.30\np(O₂) = χ(O₂)·p = 0.30×200 kPa = 60 kPa\n\n依据：p_B = n_BRT/V，p = nRT/V，两式相除得 p_B/p = n_B/n = x_B，即 p_B = x_B·p（第39–40页）。\n成立条件：理想气体混合物、各组分温度与体积相同、总压等于各组分分压之和（道尔顿分压定律，第38–39页）。',
+ exp:'标准答案 60 kPa。关键不是背 p_B=x_B p，而是知道它由 pV=nRT 对组分和总体分别写、再相除得到；纯固体、液体不产生分压，也不参与这个式子。'},
+
+{id:'c1-7',ch:'c1',t:'single',tag:'分压定律',src:'第40页',lv:1,
+ stem:'对理想气体混合物，组分 B 的分压与总压之比 p_B/p 等于？',
+ opts:['n_B/n = x_B','n/n_B','V_B/V','m_B/m'],ans:0,
+ exp:'p_B/p = n_B/n = x_B，所以 p_B = x_B·p（第40页）。分压比、物质的量比、摩尔分数三者相等，这是分压计算的核心链条。'},
+
+{id:'c1-8',ch:'c1',t:'single',tag:'理想气体',src:'第36页',lv:1,
+ stem:'标准状况（101.325 kPa、273.15 K）下，1 mol 理想气体的体积约为？',
+ opts:['22.414 L','24.5 L','11.2 L','8.314 L'],ans:0,
+ exp:'pV=nRT，V_m=22.414 L=22.414×10⁻³ m³，由此算得 R=8.314 J·mol⁻¹·K⁻¹（第36页）。8.314 是 R 的数值，不是体积。'},
+
+{id:'c1-9',ch:'c1',t:'single',tag:'理想气体',src:'第37页',lv:2,
+ stem:'真实气体在什么条件下可以当作理想气体处理？',
+ opts:['高温、高压','低温、低压','温度不太低、压力不太高','任何温度压力都可以'],ans:2,
+ exp:'理想气体实际上并不存在；只有温度不太低、压力不太高的真实气体才可当作理想气体处理（第37页）。高温高压下分子间作用力和体积不可忽略，偏差最大。'},
+
+{id:'c1-10',ch:'c1',t:'single',tag:'分压定律',src:'第38页',lv:1,
+ stem:'判断：分压是指组分气体 B 在相同温度下、单独占有与混合气体相同体积时所产生的压力。',
+ opts:['正确','错误'],ans:0,
+ exp:'这正是课件第38页对分压的定义。注意两个“相同”：相同温度、相同体积；不是“相同压力”，也不是“单独占有容器”。'},
+
+/* 第2章 化学热力学基础 */
+{id:'c2-1',ch:'c2',t:'single',tag:'反应进度',src:'第8页',lv:3,
+ stem:'同一反应写成 ①N₂+3H₂=2NH₃ 和 ②½N₂+3/2H₂=NH₃。若反应中 Δn(NH₃)=2.0 mol，两式算出的反应进度 ξ 的关系是？',
+ opts:['②算出的 ξ 是①的 2 倍','两者相等','①算出的 ξ 是②的 2 倍','无法比较'],ans:0,
+ exp:'①中 ν(NH₃)=2，ξ=2.0/2=1.0 mol；②中 ν(NH₃)=1，ξ=2.0/1=2.0 mol。所以 ξ 与方程式的写法有关，必须指明具体方程式；但同一方程式下，用哪种物质算 ξ 都相同（第8页）。'},
+
+{id:'c2-2',ch:'c2',t:'single',tag:'状态函数',src:'第15–20页',lv:2,
+ stem:'下列属于状态函数的是？',
+ opts:['Q（热）','W（功）','H（焓）','反应热效应'],ans:2,
+ exp:'P、V、T、U、H、S、G 是状态函数；热和功是系统与环境交换能量的两种形式，与具体途径有关，不是状态函数（第15、20页）。反应热效应本质是 Q，也不是状态函数。'},
+
+{id:'c2-3',ch:'c2',t:'single',tag:'状态函数',src:'第16页',lv:1,
+ stem:'状态函数的变化值具有什么特征？',
+ opts:['与变化途径有关','只与始态和终态有关','只与反应时间有关','与是否做功有关'],ans:1,
+ exp:'状态一定，状态函数一定；状态变化时，状态函数的变化值只与始态、终态有关，与途径无关（第16页）。这正是盖斯定律成立的热力学基础。'},
+
+{id:'c2-4',ch:'c2',t:'single',tag:'热力学第一定律',src:'第20–23页',lv:2,
+ stem:'某过程中系统放热 40 kJ，环境对系统做功 10 kJ。系统的 ΔU 为？',
+ opts:['−50 kJ','−30 kJ','+30 kJ','+50 kJ'],ans:1,
+ exp:'放热 Q=−40 kJ；环境对系统做功，W=+10 kJ。ΔU=Q+W=−40+10=−30 kJ（第20–23页）。符号规定：系统吸热 Q>0、系统接受环境作功 W>0，反过来取负。'},
+
+{id:'c2-5',ch:'c2',t:'single',tag:'恒容反应热',src:'第27页',lv:2,
+ stem:'封闭系统、恒容、不做非体积功时，下列成立的是？',
+ opts:['Q_V = ΔH','Q_V = ΔU','Q_V = ΔU + pΔV','Q_V = 0'],ans:1,
+ exp:'恒容时 ΔV=0，体积功 −pΔV=0，由 ΔU=Q+W 得 Q_V=ΔU（第27页）。不要和恒压的 Q_p=ΔH 互换。'},
+
+{id:'c2-6',ch:'c2',t:'single',tag:'恒压反应热',src:'第28–29页',lv:2,
+ stem:'Q_p = ΔH 成立的条件是？',
+ opts:['恒容','恒压且不做非体积功','绝热','任何条件'],ans:1,
+ exp:'封闭系统、恒压、只做体积功时，Q_p=ΔU+pΔV=ΔH（第28–29页）。恒容对应的是 Q_V=ΔU，两者不能混。'},
+
+{id:'c2-7',ch:'c2',t:'single',tag:'焓',src:'第29页',lv:1,
+ stem:'焓 H 的定义式是？',
+ opts:['H = U − pV','H = U + pV','H = U + pΔV','H = Q + W'],ans:1,
+ exp:'H=U+pV（第29页）。焓是状态函数，绝对值不知道，但可以求 ΔH；恒压只做体积功时 Q_p=ΔH。'},
+
+{id:'c2-8',ch:'c2',t:'single',tag:'ΔH与ΔU',src:'第30–31页',lv:2,
+ stem:'反应 C₂H₅OH(l)+3O₂(g)=2CO₂(g)+3H₂O(l) 的 Δn(g) 是？',
+ opts:['−1 mol','+1 mol','−3 mol','+2 mol'],ans:0,
+ exp:'Δn(g)=生成物气体物质的量−反应物气体物质的量=2−3=−1 mol。乙醇和水是液体，不计入（第30–31页）。'},
+
+{id:'c2-9',ch:'c2',t:'open',tag:'ΔH与ΔU',src:'第31页',lv:2,
+ stem:'298.15 K、100 kPa 下，1 mol 乙醇完全燃烧放出 1367 kJ 热量：\nC₂H₅OH(l)+3O₂(g)=2CO₂(g)+3H₂O(l)\n求该反应的 ΔH 和 ΔU。',
+ ref:'恒温恒压下：ΔH = Q_p = −1367 kJ\nΔn(g) = 2 − 3 = −1 mol\nΔU = ΔH − Δn(g)RT\n= (−1367) − (−1)×8.314×10⁻³×298.15\n≈ −1364 kJ',
+ exp:'答案 ΔH=−1367 kJ、ΔU=−1364 kJ。注意 R 取 8.314×10⁻³ kJ·mol⁻¹·K⁻¹；Δn(g) 只统计气体，液体乙醇和水不算。'},
+
+{id:'c2-10',ch:'c2',t:'single',tag:'盖斯定律',src:'第33页',lv:2,
+ stem:'盖斯定律的本质是？',
+ opts:['反应热只与始态、终态有关，与途径无关','反应热只与反应物有关','反应热等于正反应活化能','反应热与温度无关'],ans:0,
+ exp:'一个反应若分几步完成，总反应热等于各步反应热之和；从热力学看，ΔrHm 只取决于始、终态，与途径无关（第33页）。它是“状态函数变化与途径无关”的直接应用。'},
+
+{id:'c2-11',ch:'c2',t:'multi',tag:'标准生成焓',src:'第39–40页',lv:3,
+ stem:'下列物质中，298.15 K 标准态下 ΔfHmθ 等于 0 的有哪些？（多选）',
+ opts:['I₂(g)','O₂(g)','C(金刚石)','Br₂(l)','Cl₂(l)'],ans:[1,3],
+ exp:'最稳定单质的 ΔfHmθ=0。298 K 下碘的最稳定态是 I₂(s) 不是 I₂(g)；碳的最稳定单质是石墨，金刚石 ΔfHmθ=1.895 kJ·mol⁻¹；氯的最稳定态是 Cl₂(g) 不是 Cl₂(l)；溴的最稳定态是 Br₂(l)（第39页）。'},
+
+{id:'c2-12',ch:'c2',t:'single',tag:'标准生成焓',src:'第39、41页',lv:2,
+ stem:'下列哪个反应的 ΔrHmθ 代表 AgCl(s) 的标准摩尔生成焓？',
+ opts:['Ag⁺(aq)+Cl⁻(aq)=AgCl(s)','Ag(s)+½Cl₂(g)=AgCl(s)','AgCl(s)=Ag(s)+½Cl₂(g)','Ag(s)+AuCl(aq)=Au(s)+AgCl(s)'],ans:1,
+ exp:'生成焓要求“由最稳定单质生成 1 mol 该物质，且它是唯一产物”。Ag(s) 与 Cl₂(g) 是稳定单质，系数正好生成 1 mol AgCl（第39页）。A 的起点不是单质，C 是逆反应，D 有其他产物。'},
+
+{id:'c2-13',ch:'c2',t:'single',tag:'熵',src:'第55页',lv:3,
+ stem:'298.15 K、pθ 下，最稳定单质的标准摩尔熵 Smθ 是？',
+ opts:['等于 0','大于 0','小于 0','没有定义'],ans:1,
+ exp:'规定只有 0 K 时完美理想晶体的熵为 0；298.15 K、pθ 下 Smθ(单质)≠0（第55页红字）。注意与“最稳定单质 ΔfHmθ=0”区分：一个为零、一个不为零。'},
+
+{id:'c2-14',ch:'c2',t:'single',tag:'熵',src:'第56页',lv:2,
+ stem:'相同状态下，下列物质的 Smθ 大小顺序正确的是？',
+ opts:['CH₄(g) < C₂H₆(g) < C₃H₈(g)','CH₄(g) > C₂H₆(g) > C₃H₈(g)','三者相等','无法比较'],ans:0,
+ exp:'相同状态下，结构相似时相对分子质量越大，熵值越大：Smθ(CH₄,g)<Smθ(C₂H₆,g)<Smθ(C₃H₈,g)（第56页）。另外气态>液态>固态，温度越高熵越大。'},
+
+{id:'c2-15',ch:'c2',t:'single',tag:'熵判据',src:'第58页',lv:2,
+ stem:'“ΔrS>0 的反应自发进行”这一熵判据适用于？',
+ opts:['任何体系','孤立体系','封闭体系','敞开体系'],ans:1,
+ exp:'熵增原理（热力学第二定律）：孤立体系中 ΔrS>0 的反应为自发反应（第58页）。对封闭体系要用 ΔG 判据（第64页）。0 ℃ 水结冰 ΔrS<0 仍自发，就是熵判据不能乱用的例子。'},
+
+{id:'c2-16',ch:'c2',t:'single',tag:'吉布斯判据',src:'第64页',lv:1,
+ stem:'封闭体系中，ΔG<0 表示过程？',
+ opts:['非自发','处于平衡','自发','无法判断'],ans:2,
+ exp:'ΔG<0 自发；ΔG=0 平衡；ΔG>0 非自发（最小吉布斯函数变原理，第64页）。适用体系是封闭体系，别和孤立体系的 ΔS 判据混用。'},
+
+{id:'c2-17',ch:'c2',t:'single',tag:'温度判据',src:'第66页',lv:2,
+ stem:'下列哪种情况在任何温度下都不能自发进行？',
+ opts:['ΔH<0、ΔS>0','ΔH>0、ΔS<0','ΔH<0、ΔS<0','ΔH>0、ΔS>0'],ans:1,
+ exp:'ΔG=ΔH−TΔS。ΔH>0、ΔS<0 时两项都让 ΔG 变正，任何温度下 ΔG>0，非自发（第66页表第二种情况）。'},
+
+{id:'c2-18',ch:'c2',t:'single',tag:'温度判据',src:'第66页',lv:2,
+ stem:'下列哪种情况是“低温非自发、高温自发”？',
+ opts:['ΔH<0、ΔS>0','ΔH>0、ΔS<0','ΔH<0、ΔS<0','ΔH>0、ΔS>0'],ans:3,
+ exp:'ΔH>0（吸热，不利）、ΔS>0（熵增，有利），低温时 TΔS 小、ΔG>0；高温时 TΔS 大、ΔG<0，所以高温自发（第66页第三种情况，CaCO₃ 分解就是这一类）。'},
+
+{id:'c2-19',ch:'c2',t:'open',tag:'分解温度',src:'第68–69页',lv:3,
+ stem:'估算反应 CaCO₃(s)=CaO(s)+CO₂(g) 在标准态下的最低分解温度。\n已知 ΔrHmθ(298.15 K)=179.2 kJ·mol⁻¹，ΔrSmθ(298.15 K)=160.2 J·mol⁻¹·K⁻¹。',
+ ref:'反应自发需 ΔrGmθ = ΔrHmθ − TΔrSmθ < 0\n即 T > ΔrHmθ / ΔrSmθ\nT > 179.2×10³ J·mol⁻¹ ÷ 160.2 J·mol⁻¹·K⁻¹\nT > 1118.6 K\n所以最低分解温度约为 1118.6 K（约 845 ℃）。',
+ exp:'关键有两处：把 kJ 换成 J（×10³），以及“最低温度”对应 ΔG=0 的临界点。课件第69页给的答案就是 1118.6 K。'},
+
+{id:'c2-20',ch:'c2',t:'single',tag:'标准态',src:'第38页',lv:3,
+ stem:'关于热力学标准态，下列说法正确的是？',
+ opts:['标准态规定温度为 298.15 K','标准态规定温度为 273.15 K','标准态不规定温度','标准态规定温度为 0 K'],ans:2,
+ exp:'课件第38页黄框明确：“热力学标准态并无温度的规定”。298.15 K 只是常用数据温度，不是标准态定义的一部分。这个点选择题很爱挖。'},
+
+{id:'c2-21',ch:'c2',t:'single',tag:'燃烧焓',src:'第46页',lv:2,
+ stem:'标准摩尔燃烧焓 ΔcHmθ 中，H 元素完全燃烧的产物规定为？',
+ opts:['H₂O(g)','H₂O(l)','H₂(g)','H₂O₂'],ans:1,
+ exp:'完全燃烧规定：C→CO₂(g)，H→H₂O(l)，S→SO₂(g)，N→N₂(g)，Cl₂→HCl(aq)（第46页）。H 的产物是液态水，不是水蒸气。'},
+
+{id:'c2-22',ch:'c2',t:'single',tag:'反应商',src:'第72–73页',lv:2,
+ stem:'反应 CaCO₃(s)=CaO(s)+CO₂(g) 的反应商 Q 中应出现？',
+ opts:['CaCO₃ 与 CaO 的分压','只出现 CO₂ 的分压项','三种物质都出现','只出现 CaO 的分压'],ans:1,
+ exp:'纯固体、纯液体的活度视为 1，不写入 Q。所以 Q=p(CO₂)/pθ（第72–73页）。这也是为什么空气中 CO₂ 分压会直接影响 CaCO₃ 的分解温度。'}
+);
+</script>
+<script>
+/* 第3章 化学动力学基础 */
+Q.push(
+{id:'c3-1',ch:'c3',t:'single',tag:'热力学与动力学',src:'第3–4页',lv:2,
+ stem:'关于化学热力学与化学动力学的关系，下列说法正确的是？',
+ opts:['热力学能预测反应的速率','动力学把热力学指出的“可能性”变为“现实性”','两者都研究反应机理','热力学能给出反应完成所需时间'],ans:1,
+ exp:'热力学只判断反应能否发生、进行到什么程度，不考虑时间、机理和速率；动力学研究速率、机理及外界因素的影响，把“可能性”变为“现实性”（第3–4页）。'},
+
+{id:'c3-2',ch:'c3',t:'single',tag:'基元反应',src:'第8页',lv:1,
+ stem:'基元反应是指？',
+ opts:['反应物分子在碰撞中一步直接转化为生成物分子的反应','分几步完成的反应','必须加催化剂的反应','所有吸热反应'],ans:0,
+ exp:'基元反应是一步直接转化；由两个或两个以上基元反应构成的叫非基元反应（复杂反应），如 2NO+2H₂→N₂+2H₂O 分三步完成（第8、10页）。'},
+
+{id:'c3-3',ch:'c3',t:'single',tag:'质量作用定律',src:'第11页',lv:2,
+ stem:'质量作用定律 v=k·c_A^a·c_B^b 适用于？',
+ opts:['所有化学反应','只适用于基元反应','只适用于非基元反应','只适用于气相反应'],ans:1,
+ exp:'课件明确写“质量作用定律只是用于基元反应”（第11页）。非基元反应的速率方程必须由实验测定，不能直接照计量系数写。'},
+
+{id:'c3-4',ch:'c3',t:'single',tag:'反应级数',src:'第12页',lv:3,
+ stem:'实验测得 2NO+2H₂→N₂+2H₂O 的速率方程为 v=k·c²(NO)·c(H₂)，该反应的反应级数是？',
+ opts:['2','3','4','无法确定'],ans:1,
+ exp:'反应级数是速率方程中各浓度项指数之和：2+1=3，不是计量系数之和 2+2=4（第12页）。这是“级数≠计量数”的经典反例。'},
+
+{id:'c3-5',ch:'c3',t:'single',tag:'速率常数',src:'第13页',lv:2,
+ stem:'反应速率常数 k 主要与下列哪个因素有关？',
+ opts:['反应物浓度','系统总压力','温度','容器体积'],ans:2,
+ exp:'k 与浓度、压力无关，只是温度的函数；同温同浓度下 k 的大小可反映不同反应的相对快慢（第13页）。催化剂改变的是活化能，从而改变 k 的数值。'},
+
+{id:'c3-6',ch:'c3',t:'single',tag:'活化能',src:'第16页',lv:2,
+ stem:'活化能越小，反应速率越快，原因是？',
+ opts:['活化分子百分数越大，有效碰撞次数越多','活化分子百分数越小，碰撞越激烈','只改变平衡不改变速率','反应一定放热'],ans:0,
+ exp:'活化能越小，达到活化状态所需的能量越少，活化分子总数越多，有效碰撞次数越多，反应越快（第16页碰撞理论）。'},
+
+{id:'c3-7',ch:'c3',t:'single',tag:'活化能与焓变',src:'第18页',lv:2,
+ stem:'正反应活化能 Ea1、逆反应活化能 Ea2 与反应焓变的关系是？',
+ opts:['ΔrHmθ = Ea1 + Ea2','ΔrHmθ = Ea1 − Ea2','ΔrHmθ = Ea2 − Ea1','ΔrHmθ = Ea1 × Ea2'],ans:1,
+ exp:'ΔrHmθ=Ea1−Ea2（第18页）。Ea1 从反应物算到峰顶，Ea2 从生成物算到峰顶；两者之差才是始末态的能量差。'},
+
+{id:'c3-8',ch:'c3',t:'single',tag:'温度影响',src:'第19页',lv:1,
+ stem:'范特霍夫规则的内容是？',
+ opts:['温度每升高 10 K，反应速率一般增加 2～4 倍','温度每升高 1 K，速率增加 2～4 倍','温度每升高 100 K，速率增加 2 倍','速率与温度无关'],ans:0,
+ exp:'范特霍夫规则：温度每升高 10 K，速率一般增加 2～4 倍（第19页）。这是粗略经验规律，精确计算用阿仑尼乌斯方程。'},
+
+{id:'c3-9',ch:'c3',t:'single',tag:'阿仑尼乌斯',src:'第22页',lv:3,
+ stem:'以 lg k 对 1/T 作图，所得直线的斜率是？',
+ opts:['−Ea/(2.30R)','Ea/(2.30R)','−Ea/R','lg A'],ans:0,
+ exp:'lg k = lg A − Ea/(2.30RT)，所以斜率为 −Ea/(2.30R)，截距为 lg A（第22页）。注意是常用对数 lg，分母多一个 2.30。'},
+
+{id:'c3-10',ch:'c3',t:'single',tag:'催化剂',src:'第25–27页',lv:2,
+ stem:'关于催化剂，下列说法正确的是？',
+ opts:['改变平衡常数，使平衡右移','降低活化能，同时加快正、逆反应速率，但不改变平衡状态','只加快正反应速率','一定能提高产率'],ans:1,
+ exp:'催化剂改变反应途径、降低活化能，正逆反应速率同时加快，缩短到达平衡的时间；但不改变平衡状态和平衡常数，反应前后化学性质不变，且有选择性（第25–27页）。'},
+
+{id:'c3-11',ch:'c3',t:'single',tag:'浓度影响',src:'第24页',lv:2,
+ stem:'一定温度下增大反应物浓度，反应速率加快的原因是？',
+ opts:['活化分子百分数增大','单位体积内活化分子数增多','活化能降低','速率常数 k 增大'],ans:1,
+ exp:'温度一定时活化分子百分数不变；浓度增大使单位体积内分子总数增多，活化分子数随之增多，有效碰撞增多，速率加快（第24页）。注意区分“百分数”和“数目”。'},
+
+{id:'c3-12',ch:'c3',t:'single',tag:'速率表示',src:'第7页',lv:2,
+ stem:'关于平均速率与瞬时速率，正确的是？',
+ opts:['平均速率是 Δt→0 的极限','瞬时速率是 Δt→0 时平均速率的极限','两者总是相等','瞬时速率只能用实验点连线求得'],ans:1,
+ exp:'平均速率是某一有限时间间隔内的 Δc/Δt；瞬时速率是 Δt→0 时平均速率的极限 dc/dt（第7页）。用一段时间的平均速率代替某一时刻的瞬时速率是常见错误。'},
+
+/* 第4章 化学平衡 */
+{id:'c4-1',ch:'c4',t:'single',tag:'平衡特征',src:'第5–6页',lv:1,
+ stem:'化学平衡的本质特征是？',
+ opts:['反应已经停止','v正=v逆≠0，是动态平衡','反应物全部转化为生成物','平衡常数一定等于 1'],ans:1,
+ exp:'化学平衡是动态平衡：正、逆反应仍在进行，速率相等但不为零；特征是“逆、等、动、定、变”（第5–6页）。'},
+
+{id:'c4-2',ch:'c4',t:'single',tag:'平衡常数',src:'第7页',lv:2,
+ stem:'实验（经验）平衡常数的单位？',
+ opts:['一定是 mol·L⁻¹','可以确定','不能确定','一定无单位'],ans:2,
+ exp:'实验平衡常数用 p、c 直接表示，随反应不同单位可能不同，课件明确“单位不能确定”（第7页红字）。标准平衡常数 Kθ 用相对值 p/pθ、c/cθ，才是无量纲的。'},
+
+{id:'c4-3',ch:'c4',t:'single',tag:'平衡常数',src:'第8页',lv:1,
+ stem:'标准平衡常数 Kθ 只与下列哪个因素有关？',
+ opts:['浓度','压力','温度','催化剂'],ans:2,
+ exp:'Kθ 只是温度的函数，与浓度、压力无关；催化剂不改变 Kθ（第8页）。浓度、压力改变的是反应商 Q，温度才改变 Kθ 本身（第28页）。'},
+
+{id:'c4-4',ch:'c4',t:'single',tag:'多重平衡',src:'第12页',lv:2,
+ stem:'已知 2A⇌B 的平衡常数为 K1θ，B⇌C 的平衡常数为 K2θ，则 2A⇌C 的平衡常数为？',
+ opts:['K1θ + K2θ','K1θ × K2θ','K1θ / K2θ','K1θ − K2θ'],ans:1,
+ exp:'多重平衡规则：反应相加，平衡常数相乘；反应相减，平衡常数相除；正逆反应互为倒数（第12页）。2A⇌B 与 B⇌C 相加得 2A⇌C，所以 K=K1θ·K2θ。'},
+
+{id:'c4-5',ch:'c4',t:'single',tag:'平衡常数意义',src:'第7–8页',lv:2,
+ stem:'Kθ 很大说明？',
+ opts:['反应速率很快','达到平衡所需时间很短','平衡时反应进行的程度大','活化能很小'],ans:2,
+ exp:'K 的大小只说明平衡时反应进行的程度，不能预示达到平衡的时间（第7–8页）。速率快慢要看动力学因素，两者不是一回事。'},
+
+{id:'c4-6',ch:'c4',t:'single',tag:'Kθ与ΔG',src:'第17页',lv:2,
+ stem:'标准平衡常数与标准摩尔吉布斯函数变的关系是？',
+ opts:['ΔrGmθ = RT ln Kθ','ΔrGmθ = −RT ln Kθ','ΔrGmθ = −RT / Kθ','ΔrGmθ = Kθ'],ans:1,
+ exp:'由 ΔrGm=ΔrGmθ+RTlnQ，平衡时 ΔrGm=0、Q=Kθ，得 ΔrGmθ=−RTlnKθ（第17页）。Kθ 越大，ΔrGmθ 越负。'},
+
+{id:'c4-7',ch:'c4',t:'single',tag:'平衡移动',src:'第21页',lv:1,
+ stem:'当反应商 Q < Kθ 时，平衡？',
+ opts:['向正反应方向移动','向逆反应方向移动','不移动','无法判断'],ans:0,
+ exp:'Q<Kθ 时 ΔrGm<0，反应正向进行；Q>Kθ 逆向；Q=Kθ 平衡（第21页）。'},
+
+{id:'c4-8',ch:'c4',t:'single',tag:'惰性气体',src:'第26页',lv:3,
+ stem:'等温等容条件下，向已达平衡的气相反应体系通入惰性气体，平衡？',
+ opts:['向正反应方向移动','向逆反应方向移动','不移动','先正后逆'],ans:2,
+ exp:'等温等容时，惰性气体不改变各组分的分压和浓度，Q 不变，平衡不移动（第26页）。等温等压时才会因分压降低而移动。'},
+
+{id:'c4-9',ch:'c4',t:'single',tag:'惰性气体',src:'第26页',lv:3,
+ stem:'等温等压条件下，向 ΣνB(g)≠0 的平衡体系中通入惰性气体，平衡移动方向是？',
+ opts:['向气体分子数增大的方向移动','向气体分子数减少的方向移动','不移动','无法判断'],ans:0,
+ exp:'等温等压通入惰性气体，总压不变但各组分分压降低，相当于减压，平衡向气体分子数增大的方向移动（第26页）。若 ΣνB(g)=0 则不移动。'},
+
+{id:'c4-10',ch:'c4',t:'single',tag:'温度影响',src:'第30页',lv:2,
+ stem:'升高温度，平衡移动的方向是？',
+ opts:['向放热方向移动','向吸热方向移动','不移动','与反应热无关'],ans:1,
+ exp:'升温一律向吸热方向移动：吸热反应升温右移、Kθ 增大；放热反应升温左移、Kθ 减小（第30页）。'},
+
+{id:'c4-11',ch:'c4',t:'single',tag:'影响因素本质',src:'第28页',lv:3,
+ stem:'浓度、压力改变与温度改变对平衡影响的本质区别是？',
+ opts:['前者改变 Kθ，后者不改变','前者不改变 Kθ、只改变 Q，后者改变 Kθ 本身','两者都只改变 Q','两者都改变 Kθ'],ans:1,
+ exp:'浓度、压力改变时 Kθ 不变，只改变反应商 Q，使 Q≠Kθ 而移动；温度改变时 Kθ 本身改变（第28页“本质上的区别”）。这是判断“Kθ 变不变”的关键。'},
+
+{id:'c4-12',ch:'c4',t:'single',tag:'压力影响',src:'第25页',lv:2,
+ stem:'对 ΣνB(g)=0 的气相平衡体系，改变总压（其他条件不变），平衡？',
+ opts:['向正反应方向移动','向逆反应方向移动','没有影响','Kθ 改变'],ans:2,
+ exp:'ΣνB(g)=0 时改变总压，各组分分压同比例变化，Q 不变，平衡不移动（第25页）。只有液体或固体参与的反应，改变总压影响很小，可不予考虑。'},
+
+{id:'c4-13',ch:'c4',t:'single',tag:'勒夏特列',src:'第35页',lv:2,
+ stem:'勒夏特列原理的适用前提是？',
+ opts:['任何体系','仅适用于平衡系统','只适用于气相反应','只适用于放热反应'],ans:1,
+ exp:'课件特别注明：勒夏特列原理仅适用于平衡系统；理想平衡系统不存在，近似平衡系统普遍存在（第35页）。对未达平衡的体系不能直接套。'},
+
+{id:'c4-14',ch:'c4',t:'single',tag:'Kθ与计量式',src:'第10页',lv:3,
+ stem:'N₂+3H₂⇌2NH₃ 的 Kθ 记为 K1θ，½N₂+3/2H₂⇌NH₃ 的记为 K2θ，则？',
+ opts:['K1θ = (K2θ)²','K1θ = K2θ','K1θ = (K2θ)³','K1θ = 1/K2θ'],ans:0,
+ exp:'同一反应计量式系数变为原来的 1/2，平衡常数变为原来的平方关系：K1θ=(K2θ)²（第10页）。所以写 Kθ 必须同时给出方程式。'}
+);
+</script>
+<script>
+/* 第5–7章 物质结构 */
+Q.push(
+{id:'c5-1',ch:'c5',t:'single',tag:'玻尔理论',src:'第10页',lv:2,
+ stem:'玻尔（Bohr）理论适用于？',
+ opts:['所有原子','单电子体系（如 H、He⁺、Li²⁺）','多电子原子','分子'],ans:1,
+ exp:'课件明确“仅适用于一个电子的原子模型”（氢原子、氦原子、电离的氦原子）（第10页）。多电子原子要用量子力学模型，能量不仅与 n 有关，还与 l 有关。'},
+
+{id:'c5-2',ch:'c5',t:'single',tag:'德布罗意',src:'第11页',lv:1,
+ stem:'微观粒子的波长 λ 与动量 p 的关系是？',
+ opts:['λ = h/p','λ = p/h','λ = h·p','λ = h/p²'],ans:0,
+ exp:'德布罗意关系式 λ=h/p=h/(mv)（第11页）。波长与动量成反比：动量越大，波长越短，波动性越不明显。'},
+
+{id:'c5-3',ch:'c5',t:'single',tag:'测不准关系',src:'第16页',lv:2,
+ stem:'海森堡测不准关系式是？',
+ opts:['ΔxΔp ≥ h/4π','ΔxΔp ≤ h/4π','ΔxΔp = h','ΔxΔp ≥ h'],ans:0,
+ exp:'ΔxΔp≥h/4π（第16页红框）。它说明微观粒子位置和动量不能同时精确确定，是波粒二象性的客观反映，限制了经典力学的适用范围。'},
+
+{id:'c5-4',ch:'c5',t:'single',tag:'量子数',src:'第23–28页',lv:2,
+ stem:'下列量子数组合合理的是？',
+ opts:['n=2, l=1, m=0','n=2, l=2, m=0','n=3, l=1, m=2','n=1, l=1, m=0'],ans:0,
+ exp:'n 为正整数；l=0,1,…,n−1；m=0,±1,…,±l。所以 n=2 时 l 只能取 0、1（B 错）；n=3、l=1 时 m 只能取 −1、0、1（C 错）；n=1 时 l=0（D 错）。'},
+
+{id:'c5-5',ch:'c5',t:'single',tag:'轨道数',src:'第29页',lv:2,
+ stem:'n=3 的电子层中共有多少个原子轨道？',
+ opts:['3','5','9','18'],ans:2,
+ exp:'轨道数=n²，n=3 时为 9 个：3s 1 个、3p 3 个、3d 5 个（第29页）。若问最多容纳电子数则是 2n²=18。'},
+
+{id:'c5-6',ch:'c5',t:'single',tag:'量子数',src:'第25–26页',lv:1,
+ stem:'角量子数 l 决定？',
+ opts:['原子轨道的形状','原子轨道的空间取向','电子的自旋方向','电子层数'],ans:0,
+ exp:'l 决定轨道形状（s 球形、p 哑铃形、d 花瓣形、f 复杂）；m 决定空间取向；n 决定电子层（第25–26页）。'},
+
+{id:'c5-7',ch:'c5',t:'single',tag:'能级交错',src:'第35、76页',lv:3,
+ stem:'多电子原子中 E₄s < E₃d 的主要原因是？',
+ opts:['4s 的主量子数比 3d 小','4s 电子的钻穿效应强，更靠近核、受屏蔽小','3d 电子数比 4s 多','4s 轨道半径更大'],ans:1,
+ exp:'4s 电子钻穿效应强，能穿透内层更靠近核，受到的屏蔽较小、有效核电荷较大，能量反而低于 3d（第35、76页）。不是“n 越大能量越高”那么简单。'},
+
+{id:'c5-8',ch:'c5',t:'single',tag:'电子排布',src:'第36页',lv:1,
+ stem:'下列电子填充顺序正确的是？',
+ opts:['1s 2s 2p 3s 3p 3d 4s 4p','1s 2s 2p 3s 3p 4s 3d 4p','1s 2s 3s 2p 3p 4s 3d 4p','1s 2s 2p 3s 3p 3d 4s 4d'],ans:1,
+ exp:'填充顺序为 1s,2s,2p,3s,3p,4s,3d,4p（第36页红框）。注意 4s 先于 3d 填充，但失电子时先失 4s。'},
+
+{id:'c5-9',ch:'c5',t:'single',tag:'洪特规则',src:'第43页',lv:1,
+ stem:'洪特规则的内容是？',
+ opts:['等价轨道上电子优先单独占据、自旋平行','电子优先成对','先填 s 再填 p','电子必须全部成对'],ans:0,
+ exp:'洪特规则：等价轨道上电子尽可能分占不同轨道且自旋平行（第43页）。这样能量最低。'},
+
+{id:'c5-10',ch:'c5',t:'single',tag:'电子排布',src:'第45页',lv:2,
+ stem:'Cu（Z=29）的基态电子排布是？',
+ opts:['[Ar]3d⁹4s²','[Ar]3d¹⁰4s¹','[Ar]3d¹⁰4s²','[Ar]3d⁸4s²'],ans:1,
+ exp:'Cu 为 3d¹⁰4s¹，全满的 d 轨道更稳定（第45页）。Cr 类似，为 3d⁵4s¹（半满）。'},
+
+{id:'c5-11',ch:'c5',t:'single',tag:'洪特补充',src:'第45页',lv:3,
+ stem:'关于“半满、全满更稳定”，下列说法正确的是？',
+ opts:['所有元素都优先满足半满或全满','Cu、Cr 符合，但 Ni 是 3d⁸4s²，并非 3d¹⁰4s⁰','Ni 也是 3d¹⁰4s⁰','该规则与能量无关'],ans:1,
+ exp:'课件明确：能否由半满/全满主导最终排布，取决于它与其他能量因素（如能级差）竞争的结果。Cu 3d¹⁰4s¹、Cr 3d⁵4s¹ 符合，但 Ni 是 3d⁸4s²，是反例（第45页）。'},
+
+{id:'c5-12',ch:'c5',t:'single',tag:'失电子顺序',src:'第48页',lv:3,
+ stem:'Fe 原子失去电子生成 Fe²⁺ 时，先失去哪个电子？',
+ opts:['先失 3d 电子','先失 4s 电子','3d、4s 同时失','先失 1s 电子'],ans:1,
+ exp:'失电子顺序是“从外层到内层，主量子数大的电子层先失去”，所以先失 4s 再失 3d（第48页）。注意填充顺序（4s 先填）与失电子顺序（4s 先失）并不矛盾。'},
+
+{id:'c5-13',ch:'c5',t:'single',tag:'磁性',src:'第49页',lv:2,
+ stem:'关于未成对电子与磁性的关系，正确的是？',
+ opts:['有未成对电子，就一定有磁性','有未成对电子，一定没有磁性','电子全成对，呈顺磁性','磁性只与相对分子质量有关'],ans:0,
+ exp:'课件原文：如果有未成对电子，那么它不仅有较高的化学活性，还一定有磁性（第49页）。电子全成对则净自旋磁矩为零，呈抗磁性。'},
+
+{id:'c5-14',ch:'c5',t:'single',tag:'电负性',src:'第62–63页',lv:1,
+ stem:'下列元素中电负性最大的是？',
+ opts:['F','O','Cl','Cs'],ans:0,
+ exp:'F 的电负性最大（约 4.0），Cs、Fr 最小（0.7 左右）（第62–63页）。电负性是相对值，用来衡量原子在分子中吸引电子的能力。'},
+
+{id:'c5-15',ch:'c5',t:'single',tag:'电离能',src:'第57页',lv:3,
+ stem:'同周期从左到右第一电离能一般增大，但下列哪一组出现反常（左侧反而更大）？',
+ opts:['N > O','C < N','O < F','Li < Be'],ans:0,
+ exp:'N 的 2p 轨道半满（2p³），额外稳定，第一电离能比 O 大，因此出现 N>O 的反常（第57页）。同理 Be>B 也与半满有关。'},
+
+{id:'c5-16',ch:'c5',t:'single',tag:'电子亲和能',src:'第59页',lv:3,
+ stem:'关于电子亲和能 A₁、A₂ 的符号，正确的是？',
+ opts:['A₁ 为负值（放出能量），A₂ 为正值（吸收能量）','A₁ 为正值，A₂ 为负值','两者都为正值','两者都为负值'],ans:0,
+ exp:'第一电子亲和能 A₁ 为负值（放能），第二电子亲和能 A₂ 为正值（吸能）（第59页）。比较非金属性强弱看 −A₁，值越大越容易得电子。'},
+
+{id:'c5-17',ch:'c5',t:'single',tag:'σ键',src:'第92、97页',lv:1,
+ stem:'关于 σ 键，正确的是？',
+ opts:['头碰头重叠，可绕键轴自由旋转','肩对肩重叠，不能旋转','面对面重叠','只存在于双键中'],ans:0,
+ exp:'σ 键由轨道“头碰头”重叠形成，电子云沿键轴呈圆柱形对称，可绕键轴自由旋转；键能较大、可极化度较小（第92、97页）。'},
+
+{id:'c5-18',ch:'c5',t:'single',tag:'π键',src:'第93页',lv:1,
+ stem:'关于 π 键，正确的是？',
+ opts:['头碰头重叠','肩对肩重叠，不能自由旋转','面对面重叠','没有方向性'],ans:1,
+ exp:'π 键由 p 轨道“肩对肩”重叠形成，电子云在键轴上下，不能绕键轴自由旋转；π 键必须与 σ 键共存，只存在于不饱和键中（第93、95页）。'},
+
+{id:'c5-19',ch:'c5',t:'single',tag:'杂化',src:'第102–105页',lv:1,
+ stem:'sp³、sp²、sp 杂化轨道的键角依次是？',
+ opts:['109.5°、120°、180°','120°、109.5°、180°','180°、120°、109.5°','109.5°、180°、120°'],ans:0,
+ exp:'sp³ 为正四面体 109.5°，sp² 为平面三角形 120°，sp 为直线形 180°（第102–105页）。杂化轨道数=参与混合的原子轨道数。'},
+
+{id:'c5-20',ch:'c5',t:'single',tag:'不等性杂化',src:'第111页',lv:2,
+ stem:'NH₃ 的键角为 107.3°，比 109.5° 小的原因是？',
+ opts:['一对孤对电子的斥力把键角压缩','N 原子半径太大','NH₃ 是 sp² 杂化','分子间氢键'],ans:0,
+ exp:'NH₃ 为不等性 sp³ 杂化，一对孤对电子斥力较大，把键角从 109.5° 压缩到 107.3°；H₂O 有两对孤对，压缩到 104.5°（第111页）。'},
+
+{id:'c5-21',ch:'c5',t:'single',tag:'分子轨道',src:'第124页',lv:3,
+ stem:'O₂ 分子呈顺磁性的原因是？',
+ opts:['π*₂p 轨道上有两个自旋平行的未成对电子','σ 轨道上有未成对电子','所有电子都成对','O₂ 实际上是抗磁性'],ans:0,
+ exp:'O₂ 的分子轨道排布中，π*₂p 上有两个未成对电子，所以呈顺磁性（第124页）。价键理论写成 O=O、电子全成对，无法解释这一实验事实，这正是引入分子轨道理论的原因。'},
+
+{id:'c5-22',ch:'c5',t:'single',tag:'键级',src:'第127页',lv:3,
+ stem:'O₂⁺、O₂、O₂⁻ 的稳定性顺序是？',
+ opts:['O₂⁺ > O₂ > O₂⁻','O₂ > O₂⁺ > O₂⁻','O₂⁻ > O₂ > O₂⁺','三者相同'],ans:0,
+ exp:'键级分别为 O₂⁺ 2.5、O₂ 2.0、O₂⁻ 1.5；键级越大，键能越大、分子越稳定（第122、127页）。再加电子到 π* 轨道，键级继续降到 O₂²⁻ 的 1.0。'},
+
+{id:'c5-23',ch:'c5',t:'single',tag:'VSEPR',src:'第133页',lv:2,
+ stem:'用 VSEPR 判断 SO₂ 的空间构型与中心原子杂化类型，正确的是？',
+ opts:['直线形，sp','V 形（角形），sp²','平面三角形，sp²','正四面体，sp³'],ans:1,
+ exp:'SO₂ 中 S 的价层电子对数为 3、孤对数为 1，属 AX₂E 型，构型为 V 形（角形），对应 sp² 杂化（第133页）。SO₂ 是极性分子。'},
+
+{id:'c5-24',ch:'c5',t:'single',tag:'分子极性',src:'第139、142页',lv:2,
+ stem:'CO₂ 分子的极性是？',
+ opts:['非极性分子，但含有极性键','极性分子','非极性分子，且键也是非极性的','无法判断'],ans:0,
+ exp:'C=O 键是极性键，但 CO₂ 为直线形对称结构，两个键偶极矩相互抵消，μ=0，整体是非极性分子（第139、142页）。极性键≠极性分子。'},
+
+{id:'c5-25',ch:'c5',t:'single',tag:'分子间力',src:'第151页',lv:1,
+ stem:'三种范德华力的大小顺序一般是？',
+ opts:['色散力 > 取向力 > 诱导力','取向力 > 色散力 > 诱导力','诱导力 > 取向力 > 色散力','三者相等'],ans:0,
+ exp:'一般色散力>取向力>诱导力（第151页）；色散力存在于所有分子之间，取向力只存在于极性分子之间，诱导力存在于极性与非极性分子之间。氢键更强，顺序为氢键>色散力>取向力>诱导力。'},
+
+{id:'c5-26',ch:'c5',t:'single',tag:'氢键',src:'第153页',lv:2,
+ stem:'HF 的沸点比 HCl 高，主要原因是？',
+ opts:['HF 分子间形成氢键','HF 分子内形成氢键','HF 的色散力特别大','HF 是离子化合物'],ans:0,
+ exp:'F 电负性大、半径小，HF 分子间形成氢键，使沸点、熔化热、汽化热反常升高（第153、160页）。HX 中只有 HF 反常，HCl→HBr→HI 才按分子量增大依次升高。'},
+
+{id:'c5-27',ch:'c5',t:'single',tag:'氢键',src:'第156页',lv:3,
+ stem:'分子内氢键对物质熔、沸点的影响一般是？',
+ opts:['使熔、沸点升高','一般使熔、沸点降低','与分子间氢键影响相同','没有影响'],ans:1,
+ exp:'分子间氢键使熔沸点升高；分子内氢键削弱分子间作用力，一般使熔点、沸点、汽化热等减小（第156页）。邻硝基苯酚就是分子内氢键的例子。'}
+);
+</script>
+<script>
+/* 第8章 定量分析基础及滴定分析法概述 */
+Q.push(
+{id:'c8-1',ch:'c8',t:'single',tag:'准确度',src:'第12页',lv:1,
+ stem:'准确度是用什么来衡量的？',
+ opts:['偏差','误差','标准偏差','极差'],ans:1,
+ exp:'准确度表征测量值与真实值的接近程度，用误差表示；精密度表征平行测量值的接近程度，用偏差表示（第12页）。'},
+
+{id:'c8-2',ch:'c8',t:'single',tag:'准确度与精密度',src:'第13页',lv:2,
+ stem:'“精密度高”与“准确度高”的关系是？',
+ opts:['精密度高，准确度一定高','精密度高，准确度不一定高','精密度高，准确度一定低','两者没有关系'],ans:1,
+ exp:'精密度是保证准确度的前提，但精密度高不一定准确度高——可能存在系统误差，数据很集中却整体偏离真值（第13页三靶心图）。'},
+
+{id:'c8-3',ch:'c8',t:'single',tag:'系统误差',src:'第17–18页',lv:2,
+ stem:'系统误差的特点是？',
+ opts:['随机出现、不可测','具有单向性、可测，影响准确度','只影响精密度','无法减免'],ans:1,
+ exp:'系统误差由固定因素造成，具单向性、可测，影响准确度；可通过对照试验、仪器校准、空白试验、规范操作减免（第17–18页）。随机误差才是不可测、影响精密度的。'},
+
+{id:'c8-4',ch:'c8',t:'single',tag:'系统误差',src:'第18页',lv:1,
+ stem:'检查分析过程中有无系统误差的最有效方法是？',
+ opts:['增加测定次数','对照试验','取平均值','更换指示剂'],ans:1,
+ exp:'课件原文：对照试验是检查有无系统误差的最有效方法（第18页）。增加测定次数只能减小随机误差，不能消除系统误差。'},
+
+{id:'c8-5',ch:'c8',t:'single',tag:'随机误差',src:'第20页',lv:2,
+ stem:'减小随机误差的常用方法是？',
+ opts:['适当增加平行测定次数并取平均值','校准仪器','做空白试验','改用更纯的试剂'],ans:0,
+ exp:'随机误差由不定因素造成、不可测，只能通过适当增加平行测定次数取平均值来减小（第20页）。校准仪器、空白试验针对的是系统误差。'},
+
+{id:'c8-6',ch:'c8',t:'single',tag:'标准偏差',src:'第28页',lv:3,
+ stem:'样本标准偏差 s 的分母取 n−1 而不是 n，主要理由是？',
+ opts:['计算更方便','使由样本算出的标准偏差更接近总体水平（适度放大）','因为少了一个数据','没有特别理由'],ans:1,
+ exp:'总体标准偏差 σ 除以 n；样本标准偏差 s 除以 n−1，是为了使算出的值更接近总体水平，需适度放大（第28页红字注释）。'},
+
+{id:'c8-7',ch:'c8',t:'single',tag:'置信区间',src:'第31–32页',lv:2,
+ stem:'置信区间 μ = x̄ ± t·s/√n 中，其他条件不变，增加测定次数 n，置信区间会？',
+ opts:['变大','变小','不变','先变大后变小'],ans:1,
+ exp:'n 增大 → t 变小、s/√n 变小 → 置信区间变小，结果准确度提高（第31–32页）。置信度提高则 t 变大、区间变大，两者方向相反。'},
+
+{id:'c8-8',ch:'c8',t:'single',tag:'Q检验',src:'第34页',lv:2,
+ stem:'Q 检验法舍弃可疑值的判据是？',
+ opts:['Q > Q表 时舍弃','Q < Q表 时舍弃','Q = 0 时舍弃','Q > 4 时舍弃'],ans:0,
+ exp:'Q 检验：算出 Q 值后与查表得到的 Q表 比较，Q>Q表 则舍弃该可疑值（第34页）。数据较少且舍去一个后，应补加一个数据。'},
+
+{id:'c8-9',ch:'c8',t:'single',tag:'4d法',src:'第37页',lv:3,
+ stem:'4 倍法（4d 法）舍弃可疑值的判据是？',
+ opts:['|可疑值−x̄| / d̄ ≥ 4','|可疑值−x̄| / d̄ ≤ 4','Q > 4','|可疑值−x̄| = 4'],ans:0,
+ exp:'4d 法：|可疑值−x̄|/d̄ ≥ 4 时舍弃（第37页，标题标注“了解”）。注意 x̄、d̄ 要由除去可疑值之外的其余数据算得。'},
+
+{id:'c8-10',ch:'c8',t:'single',tag:'有效数字',src:'第41页',lv:1,
+ stem:'0.0518 有几位有效数字？',
+ opts:['2 位','3 位','4 位','5 位'],ans:1,
+ exp:'前导零只起定位作用，不是有效数字；5、1、8 三位有效（第41页）。对比 0.5180 是 4 位，末位零是有效数字。'},
+
+{id:'c8-11',ch:'c8',t:'single',tag:'有效数字',src:'第42页',lv:3,
+ stem:'pH = 11.02 的有效数字位数是？',
+ opts:['2 位','3 位','4 位','1 位'],ans:0,
+ exp:'对 pH、pM、lgK 这类对数，有效数字只看小数点后的位数，所以 11.02 是 2 位（第42页）。整数部分只表示数量级。'},
+
+{id:'c8-12',ch:'c8',t:'single',tag:'修约',src:'第43页',lv:3,
+ stem:'按“四舍六入五留双”，将 5.125 修约到两位小数，结果是？',
+ opts:['5.12','5.13','5.10','5.2'],ans:0,
+ exp:'尾数恰为 5 时看前一位：2 是偶数则舍去，得 5.12（第43页）。若前一位是奇数则进位，如 5.135→5.14；尾数不止 5（如 7.21551）则一律进位。'},
+
+{id:'c8-13',ch:'c8',t:'single',tag:'运算规则',src:'第44页',lv:2,
+ stem:'加减法运算结果的位数依据是？',
+ opts:['有效数字位数最少的数据','小数点后位数最少（绝对误差最大）的数据','相对误差最大的数据','取位数最多的数据'],ans:1,
+ exp:'加减法看绝对误差，即小数点后位数最少的那一项；乘除法看相对误差，即有效数字位数最少的那一项（第44页）。两条规则不能互换。'},
+
+{id:'c8-14',ch:'c8',t:'single',tag:'运算规则',src:'第44页',lv:2,
+ stem:'乘除法运算结果的位数依据是？',
+ opts:['小数点后位数最少的数据','有效数字位数最少（相对误差最大）的数据','绝对误差最大的数据','随意保留'],ans:1,
+ exp:'乘除法看相对误差，即有效数字位数最少的那一项（第44页）。例如 0.0121×25.64×1.057，结果应保留 3 位有效数字。'},
+
+{id:'c8-15',ch:'c8',t:'single',tag:'基准物质',src:'第51页',lv:2,
+ stem:'下列哪一项不是基准物质的必要条件？',
+ opts:['组成与化学式完全相符','纯度在 99.9% 以上','性质稳定','摩尔质量越小越好'],ans:3,
+ exp:'基准物质要求组成与化学式相符、纯度高（>99.9%）、性质稳定，且摩尔质量相对较大（可减小称量的相对误差）（第51页）。所以“越小越好”是错的。'},
+
+{id:'c8-16',ch:'c8',t:'single',tag:'基准物质',src:'第50–51页',lv:3,
+ stem:'判断：基准物质就是纯度很高的物质。',
+ opts:['正确','错误'],ans:1,
+ exp:'纯度高的物质不一定是基准物质，还必须满足组成与化学式完全相符、性质稳定、摩尔质量较大等条件（第51页）。课件第60页的判断题正是考这个辨析。'},
+
+{id:'c8-17',ch:'c8',t:'single',tag:'滴定度',src:'第52页',lv:3,
+ stem:'T(Fe/K₂Cr₂O₇)=1.00 %/mL 的含义是？',
+ opts:['1 mL 滴定剂相当于 1.00 g 铁','1 mL 滴定剂相当于 1.00% 的铁（百分含量）','1 g 铁消耗 1 mL 滴定剂','滴定剂浓度为 1%'],ans:1,
+ exp:'滴定度有两种单位：g/mL 表示质量，%/mL 表示百分含量；符号相同、含义不同，只能靠单位区分（第52页）。'},
+
+{id:'c8-18',ch:'c8',t:'single',tag:'滴定术语',src:'第47页',lv:2,
+ stem:'关于化学计量点与滴定终点，正确的是？',
+ opts:['两者是同一概念','计量点是恰好完全反应的点，终点是指示剂变色点，二者之差为终点误差','终点误差属于随机误差','终点误差可以忽略不计'],ans:1,
+ exp:'计量点（SP）是恰好完全反应的点；滴定终点是指示剂颜色突变点；两者之差即终点误差，课件定性为“由固定因素引起，是系统误差”（第47页）。'},
+
+{id:'c8-19',ch:'c8',t:'single',tag:'滴定方式',src:'第54页',lv:3,
+ stem:'用返滴定法测 Al³⁺（先加过量 EDTA，再用 Zn²⁺ 返滴定），Al³⁺ 的物质的量与？',
+ opts:['n(Al)=n(EDTA)','n(Al)=n(EDTA)−n(Zn)','n(Al)=n(Zn)','n(Al)=2n(EDTA)'],ans:1,
+ exp:'返滴定中先加过量 EDTA，剩余的 EDTA 用 Zn²⁺ 滴定，所以 n(Al)=n(EDTA)−n(Zn)（第54页）。适用于反应慢或没有合适指示剂的体系。'},
+
+{id:'c8-20',ch:'c8',t:'single',tag:'滴定方式',src:'第54页',lv:3,
+ stem:'KMnO₄ 法间接滴定 Ca²⁺（先沉淀为 CaC₂O₄，再溶解滴定），n(Ca) 与 n(KMnO₄) 的关系是？',
+ opts:['n(Ca) = n(KMnO₄)','n(Ca) = 5/2 n(KMnO₄)','n(Ca) = 2/5 n(KMnO₄)','n(Ca) = 5 n(KMnO₄)'],ans:1,
+ exp:'由计量关系 n(Ca)=n(C₂O₄²⁻)=(5/2)n(KMnO₄)（第54页）。间接滴定适用于不能直接与滴定剂反应的物质。'}
+);
+</script>
+<script>
+/* ============ 配置 ============ */
+const CH=[
+  {id:'c1',no:'01',name:'绪论',sub:'相 · 浓度 · 分压定律',pages:42},
+  {id:'c2',no:'02',name:'化学热力学基础',sub:'第一定律 · 焓 · 熵 · 吉布斯',pages:74},
+  {id:'c3',no:'03',name:'化学动力学基础',sub:'速率 · 级数 · 活化能 · 催化',pages:30},
+  {id:'c4',no:'04',name:'化学平衡',sub:'Kθ · 平衡移动 · 温度',pages:42},
+  {id:'c5',no:'05',name:'物质结构',sub:'原子 · 分子 · 固体（5–7章）',pages:164},
+  {id:'c8',no:'08',name:'定量分析基础',sub:'误差 · 数据处理 · 有效数字 · 滴定',pages:68}
+];
+const KEY='wjhx_v2';
+function loadState(){
+  try{const r=JSON.parse(localStorage.getItem(KEY));return (r&&r.q)?r:{q:{},dark:false}}catch(e){return {q:{},dark:false}}
+}
+let S=loadState();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const app=document.getElementById('app');
+let SS=null;
+let view='home';
+
+/* ============ 工具 ============ */
+function fmt(t){
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');
+}
+function qs(ch){return Q.filter(q=>q.ch===ch)}
+function qstat(id){return S.q[id]||{n:0,ok:0,last:0}}
+function attemptedCount(list){return list.filter(q=>qstat(q.id).n>0).length}
+function accOf(list){
+  let n=0,ok=0;list.forEach(q=>{const s=qstat(q.id);n+=s.n;ok+=s.ok});
+  return n?Math.round(ok/n*100):null;
+}
+function wrongIds(){
+  return Q.filter(q=>{const s=S.q[q.id];return s&&s.n>0&&s.last===0}).map(q=>q.id);
+}
+function weakTags(){
+  const m={};
+  Q.forEach(q=>{const s=qstat(q.id);if(s.n>=2){const t=m[q.tag]||(m[q.tag]={n:0,ok:0});t.n+=s.n;t.ok+=s.ok}});
+  return Object.entries(m).map(([k,v])=>({tag:k,acc:Math.round(v.ok/v.n*100),n:v.n}))
+    .filter(x=>x.acc<75).sort((a,b)=>a.acc-b.acc).slice(0,6);
+}
+function levelName(a,n){
+  if(a===null||n<5)return '样本不足';
+  if(a>=90)return '掌握较好';
+  if(a>=75)return '基本掌握';
+  if(a>=60)return '掌握不牢';
+  return '明显薄弱';
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function record(q,ok){
+  const s=S.q[q.id]||{n:0,ok:0,last:0};
+  s.n++; if(ok)s.ok++; s.last=ok?1:0; S.q[q.id]=s; save();
+}
+function resetAll(){
+  if(confirm('清空全部答题记录？此操作不可恢复。')){S={q:{},dark:S.dark};save();go('home')}
+}
+
+/* ============ 首页 ============ */
+function renderHome(){
+  const done=attemptedCount(Q), total=Q.length;
+  let n=0,ok=0;Q.forEach(q=>{const s=qstat(q.id);n+=s.n;ok+=s.ok});
+  const acc=n?Math.round(ok/n*100):0;
+  const wb=wrongIds().length;
+  const weak=weakTags();
+  let chs='';
+  CH.forEach(c=>{
+    const list=qs(c.id), d=attemptedCount(list), a=accOf(list);
+    const pct=list.length?Math.round(d/list.length*100):0;
+    chs+=`<div class="card chap" onclick="startChapter('${c.id}')">
+      <div class="no">${c.no}</div>
+      <div class="meta">
+        <b>${c.name}</b><span>${c.sub} · ${c.pages}页 · ${list.length}题</span>
+        <div class="bar small"><i style="width:${pct}%"></i></div>
+      </div>
+      <div class="pct">${a===null?'未测':a+'%'}<br><span style="font-size:11px">${d}/${list.length}</span></div>
+    </div>`;
+  });
+  let weakHtml='';
+  if(weak.length){
+    weakHtml=`<div class="sec"><h2>当前薄弱点（按答题记录）</h2></div>
+      <div class="taglist">${weak.map(w=>`<div class="tagcard"><b>${w.tag}</b><span>${w.acc}% · ${w.n}次</span></div>`).join('')}</div>`;
+  }
+  app.innerHTML=`<div class="top">
+      <div class="ttl">无机及分析化学 · 随身复习</div>
+      <button class="link" onclick="go('stats')">统计</button>
+    </div>
+    <div class="wrap fade">
+      <div class="hero">
+        <h1>刷题不如刷懂</h1>
+        <p>题源：课件 462 页 · 逐页整理 · 答案与讲解以课件为准</p>
+        <div class="stats">
+          <div class="stat"><b>${done}</b><span>已练 / ${total} 题</span></div>
+          <div class="stat"><b>${acc}%</b><span>总正确率</span></div>
+          <div class="stat"><b>${wb}</b><span>错题待清</span></div>
+        </div>
+      </div>
+      <button class="btn primary wide" onclick="startRandom()">随机 20 题 · 摸底</button>
+      <div class="row">
+        <button class="btn ghost" onclick="startWrong()" ${wb?'':'disabled'}>错题重练${wb?'（'+wb+'）':''}</button>
+        <button class="btn ghost" onclick="go('stats')">掌握度</button>
+      </div>
+      <div class="sec"><h2>按章训练</h2><a onclick="go('stats')">查看评估说明</a></div>
+      ${chs}
+      ${weakHtml}
+      <div class="card" style="margin-top:18px">
+        <div class="dark-toggle">
+          <div><b style="font-size:14.5px">深色模式</b><div class="note">夜间刷题护眼</div></div>
+          <div class="switch ${S.dark?'on':''}" onclick="toggleDark()"></div>
+        </div>
+      </div>
+      <div class="note" style="margin-top:16px">
+        <b>范围说明：</b>课件含第1–8章及两套练习；第9–12章（酸碱、沉淀、氧化还原、配位滴定）工作区无课件，未收录。
+        每题标注课件页码，讲解只依据课件；课件自身笔误处在讲解中直接标明。
+      </div>
+      <div class="foot">富江 · 为爸爸定制 · 本地存储，不上传任何数据</div>
+    </div>`;
+}
+
+/* ============ 开始 ============ */
+function startChapter(ch){
+  const list=qs(ch).map(q=>q.id);
+  const c=CH.find(x=>x.id===ch);
+  startQuiz(list,c.name);
+}
+function startRandom(){
+  let ids=shuffle(Q.map(q=>q.id));
+  const unseen=ids.filter(id=>qstat(id).n===0);
+  const seen=ids.filter(id=>qstat(id).n>0);
+  ids=unseen.concat(seen).slice(0,20);
+  startQuiz(ids,'随机 20 题');
+}
+function startWrong(){
+  const w=wrongIds(); if(!w.length)return;
+  startQuiz(shuffle(w.slice()),'错题重练');
+}
+function startQuiz(ids,title){
+  SS={ids:ids,i:0,title,ok:0,wrong:[],answered:false,sel:[],revealed:false,graded:false};
+  go('quiz');
+}
+
+/* ============ 练习页 ============ */
+function renderQuiz(){
+  const q=Q.find(x=>x.id===SS.ids[SS.i]);
+  if(!q){go('result');return}
+  const s=qstat(q.id);
+  const answered=SS.answered;
+  const lv=q.lv===1?'基础':q.lv===2?'高频':'易错';
+  let body='';
+  if(q.t==='single'||q.t==='multi'){
+    const multi=q.t==='multi';
+    body=q.opts.map((o,i)=>{
+      let cls='opt';
+      if(multi&&!answered&&SS.sel.includes(i))cls+=' sel';
+      if(answered){
+        const isRight=multi?q.ans.includes(i):q.ans===i;
+        const picked=multi?SS.sel.includes(i):SS.ans===i;
+        if(isRight)cls+=' ok';
+        else if(picked)cls+=' no';
+        else cls+=' dim';
+      }
+      return `<button class="${cls}" ${answered?'disabled':''} onclick="pick(${i})">
+        <span class="k">${'ABCD'[i]}</span><span>${fmt(o)}</span></button>`;
+    }).join('');
+    if(multi&&!answered){
+      body+=`<button class="btn primary wide" onclick="submitMulti()">提交答案</button>`;
+    }
+  }else{
+    body=`<div class="card" style="box-shadow:none">
+      <div class="note">这是一道需要写过程或口述的题。先在纸上做，或在心里过一遍，再点开参考答案自评。</div></div>`;
+    if(!SS.revealed){
+      body+=`<button class="btn ghost wide" onclick="reveal()">显示参考答案</button>`;
+    }else{
+      body+=`<div class="exp"><div class="h">参考答案</div><div class="ref">${fmt(q.ref||'')}</div></div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn primary" onclick="selfGrade(1)">我答对了</button>
+          <button class="btn ghost" onclick="selfGrade(0)">没答对 / 不会</button>
+        </div>`;
+    }
+  }
+  let exp='';
+  if(answered&&q.t!=='open'){
+    exp=`<div class="exp fade">
+      <div class="h">${SS.ok?'答对了':'再想一步'}<span class="src">${q.src}</span></div>
+      <div>${fmt(q.exp||'')}</div>
+    </div>`;
+  }
+  if(answered&&q.t==='open'){
+    exp=`<div class="exp fade">
+      <div class="h">${SS.ok?'记下了':'这一题要重点回看'}<span class="src">${q.src}</span></div>
+      <div>${fmt(q.exp||'')}</div>
+    </div>`;
+  }
+  const pct=Math.round((SS.i+(answered?1:0))/SS.ids.length*100);
+  app.innerHTML=`<div class="top">
+      <button class="back" onclick="quitQuiz()">‹</button>
+      <div class="ttl">${SS.title}</div>
+      <div class="cnt">${SS.i+1}/${SS.ids.length}</div>
+    </div>
+    <div class="wrap fade">
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip">${q.tag}</span>
+        <span class="chip">${q.src}</span>
+        <span class="chip lv${q.lv}">${lv}</span>
+        ${s.n>1?`<span class="chip">做过 ${s.n} 次 · 对 ${s.ok}</span>`:''}
+      </div>
+      <div class="stem">${fmt(q.stem)}</div>
+      ${body}
+      ${exp}
+      ${answered?`<button class="btn primary wide" style="margin-top:18px" onclick="nextQ()">${SS.i+1>=SS.ids.length?'查看结果':'下一题'} →</button>`:''}
+      ${answered?'':`<div class="tip"><button class="link" onclick="giveUp()">不会，直接看答案</button></div>`}
+      <div class="tip">答案只在作答后出现，先自己判断。</div>
+    </div>`;
+}
+
+window.pick=function(i){
+  const q=Q.find(x=>x.id===SS.ids[SS.i]);
+  if(SS.answered)return;
+  if(q.t==='multi'){
+    const p=SS.sel.indexOf(i);
+    if(p>=0)SS.sel.splice(p,1);else SS.sel.push(i);
+    renderQuiz();return;
+  }
+  SS.ans=i; SS.answered=true;
+  const ok=(q.ans===i); SS.ok+=ok?1:0; if(!ok)SS.wrong.push(q.id);
+  record(q,ok); renderQuiz();
+};
+window.submitMulti=function(){
+  const q=Q.find(x=>x.id===SS.ids[SS.i]);
+  if(SS.answered)return;
+  const a=SS.sel.slice().sort().join(','), b=q.ans.slice().sort().join(',');
+  const ok=(a===b);
+  SS.answered=true; SS.ok+=ok?1:0; if(!ok)SS.wrong.push(q.id);
+  record(q,ok); renderQuiz();
+};
+window.reveal=function(){SS.revealed=true;renderQuiz()};
+window.selfGrade=function(ok){
+  const q=Q.find(x=>x.id===SS.ids[SS.i]);
+  if(SS.graded)return;
+  SS.graded=true; SS.answered=true; SS.ok+=ok?1:0; if(!ok)SS.wrong.push(q.id);
+  record(q,!!ok); renderQuiz();
+};
+window.giveUp=function(){
+  const q=Q.find(x=>x.id===SS.ids[SS.i]);
+  if(SS.answered)return;
+  if(q.t==='open'){SS.revealed=true;renderQuiz();return}
+  SS.answered=true; SS.ans=-1; if(q.t==='multi')SS.sel=[];
+  SS.wrong.push(q.id); record(q,false); renderQuiz();
+};
+function nextQ(){
+  SS.i++; SS.answered=false; SS.sel=[]; SS.revealed=false; SS.graded=false;
+  if(SS.i>=SS.ids.length){go('result')}else{renderQuiz()}
+}
+function quitQuiz(){
+  if(confirm('退出本次练习？已答题目会保留记录。')){go('home')}
+}
+
+/* ============ 结果 ============ */
+function renderResult(){
+  const total=SS.ids.length, ok=SS.ok, pct=Math.round(ok/total*100);
+  const wrong=SS.wrong.map(id=>Q.find(q=>q.id===id));
+  let tip = pct>=90?'这一章可以往深里走了。':pct>=75?'基本盘稳，错题要回看。':pct>=60?'有几个概念在打架，先补讲解。':'别急，先把这几道题的讲解读透。';
+  app.innerHTML=`<div class="top"><button class="back" onclick="go('home')">‹</button>
+      <div class="ttl">本轮结果</div><div class="cnt">${SS.title}</div></div>
+    <div class="wrap fade">
+      <div class="mid">
+        <div class="emoji">${pct>=90?'🌿':pct>=75?'🍀':pct>=60?'🌱':'🫧'}</div>
+        <div class="big">${ok} / ${total}</div>
+        <p>正确率 ${pct}% · ${tip}</p>
+      </div>
+      ${wrong.length?`<div class="card" style="margin-top:16px">
+        <div class="sec" style="margin:0 0 6px"><h2>本轮错题（${wrong.length}）</h2></div>
+        ${wrong.map(q=>`<div class="review"><div class="it"><div class="wrong-it"><span class="dot"></span><div><b>${fmt(q.stem).replace(/<br>.*/,'…')}</b><br><span style="font-size:12px">${q.tag} · ${q.src}</span></div></div></div></div>`).join('')}
+      </div>`:`<div class="card" style="margin-top:16px"><div class="note">本轮没有错题。可以换个章节，或者把刚才的题口述一遍检验是否真懂。</div></div>`}
+      <button class="btn primary wide" style="margin-top:16px" onclick="retryWrong()" ${wrong.length?'':'disabled'}>重练本轮错题</button>
+      <div class="row">
+        <button class="btn ghost" onclick="go('home')">回首页</button>
+        <button class="btn ghost" onclick="startRandom()">再来 20 题</button>
+      </div>
+    </div>`;
+}
+function retryWrong(){
+  if(!SS.wrong.length)return;
+  startQuiz(shuffle(SS.wrong.slice()),'本轮错题重练');
+}
+
+/* ============ 错题本 ============ */
+function renderWrong(){
+  const ids=wrongIds(), list=ids.map(id=>Q.find(q=>q.id===id));
+  let body='';
+  if(!list.length){body=`<div class="mid"><div class="emoji">✨</div><h3>错题本是空的</h3><p>做几道题再来。</p></div>`}
+  else{
+    body=`<button class="btn primary wide" onclick="startWrong()">全部重练（${list.length}）</button>`+
+    list.map(q=>`<div class="card" style="margin-top:10px" onclick="singleReview('${q.id}')">
+      <div class="chips" style="margin:0 0 6px"><span class="chip">${q.tag}</span><span class="chip">${q.src}</span></div>
+      <div style="font-size:14.5px;font-weight:600;line-height:1.6">${fmt(q.stem).replace(/<br>.*/,'…')}</div>
+    </div>`).join('');
+  }
+  app.innerHTML=`<div class="top"><button class="back" onclick="go('home')">‹</button>
+      <div class="ttl">错题本</div><div class="cnt">${list.length} 题</div></div>
+    <div class="wrap fade">${body}</div>`;
+}
+window.singleReview=function(id){startQuiz([id],'单题回看')};
+
+/* ============ 统计 ============ */
+function renderStats(){
+  let rows='';
+  CH.forEach(c=>{
+    const list=qs(c.id),d=attemptedCount(list),a=accOf(list);
+    rows+=`<tr><td>${c.no} ${c.name}</td><td>${d}/${list.length}</td><td>${a===null?'—':a+'%'}</td><td>${levelName(a,d)}</td></tr>`;
+  });
+  const weak=weakTags();
+  app.innerHTML=`<div class="top"><button class="back" onclick="go('home')">‹</button>
+      <div class="ttl">掌握度</div><div class="cnt">按答题记录</div></div>
+    <div class="wrap fade">
+      <div class="card">
+        <table class="st"><thead><tr><th>章节</th><th>进度</th><th>正确率</th><th>评估</th></tr></thead>
+        <tbody>${rows}</tbody></table>
+        <div class="note" style="margin-top:12px">评估只看你在这台设备答过的题：同一章节至少做满 5 题才给等级（≥90 掌握较好 / 75–89 基本掌握 / 60–74 掌握不牢 / &lt;60 明显薄弱），不足 5 题显示“样本不足”，不凭一题下结论。</div>
+      </div>
+      <div class="sec"><h2>薄弱知识点</h2></div>
+      ${weak.length?`<div class="taglist">${weak.map(w=>`<div class="tagcard"><b>${w.tag}</b><span>${w.acc}% · ${w.n}次</span></div>`).join('')}</div>`:`<div class="note">至少答 2 次的知识点才会进入这里。</div>`}
+      <div class="sec"><h2>数据</h2></div>
+      <button class="btn ghost" onclick="go('wrong')">打开错题本（${wrongIds().length}）</button>
+      <button class="btn ghost wide" onclick="resetAll()">清空全部记录</button>
+      <div class="note" style="margin-top:16px">记录只存在这台手机的浏览器里（localStorage），换浏览器或清缓存会丢。</div>
+    </div>`;
+}
+
+/* ============ 路由 ============ */
+function go(v){view=v;render();window.scrollTo(0,0)}
+function render(){
+  if(view==='home')renderHome();
+  else if(view==='quiz')renderQuiz();
+  else if(view==='result')renderResult();
+  else if(view==='wrong')renderWrong();
+  else if(view==='stats')renderStats();
+}
+window.go=go;window.startChapter=startChapter;window.startRandom=startRandom;
+window.startWrong=startWrong;window.nextQ=nextQ;window.retryWrong=retryWrong;
+window.resetAll=resetAll;window.quitQuiz=quitQuiz;
+window.toggleDark=function(){S.dark=!S.dark;save();document.body.classList.toggle('dark',S.dark);renderHome()};
+if(S.dark)document.body.classList.add('dark');
+render();
+if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='127.0.0.1' || location.hostname==='localhost')){
+  navigator.serviceWorker.register('sw.js').catch(function(){});
+}
+</script>
+</body>
+</html>
